@@ -1,0 +1,127 @@
+CREATE DATABASE VENTASS_12024;
+USE VENTASS_12024;
+
+CREATE TABLE CATEGORIA (
+	ID INTEGER NOT NULL PRIMARY KEY,
+    Descripcion VARCHAR(30)
+);
+
+CREATE TABLE FACTURA (
+	NRO INTEGER NOT NULL PRIMARY KEY,
+    Fecha DATE NOT NULL,
+    NIT INTEGER,
+    Nombre VARCHAR(60),
+    MontoPagar FLOAT NOT NULL
+);
+
+CREATE TABLE PRODUCTO (
+	Codigo VARCHAR(4) NOT NULL PRIMARY KEY,
+    Nombre VARCHAR(60) NOT NULL,
+    Precio FLOAT NOT NULL,
+    ID_Categoria INTEGER NOT NULL, 
+    FOREIGN KEY (ID_Categoria) REFERENCES CATEGORIA(ID) 
+    ON UPDATE CASCADE
+	ON DELETE CASCADE
+);
+
+CREATE TABLE VENDE (
+	NROF INTEGER NOT NULL,
+    CodigoProducto VARCHAR(4) NOT NULL,
+    Cantidad INTEGER NOT NULL,
+    PrecioP FLOAT NOT NULL,
+    PRIMARY KEY (NROF, CodigoProducto),
+    FOREIGN KEY (NROF) REFERENCES FACTURA(NRO) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (CodigoProducto) REFERENCES PRODUCTO(Codigo) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+DROP TABLE VENDE;
+
+INSERT INTO CATEGORIA VALUES(1, "ABARROTES");
+INSERT INTO CATEGORIA VALUES(2, "BEBIDAS NO ALCOHOLICAS");
+INSERT INTO CATEGORIA VALUES(3, "LIMPIEZA");
+INSERT INTO CATEGORIA VALUES(4, "ROPA");
+
+DELETE FROM CATEGORIA WHERE ID = 5;
+
+INSERT INTO FACTURA VALUES(100, "2023/03/10", 111, "Joaquin Chumacero", 53);
+INSERT INTO FACTURA VALUES(101, "2023/03/10", 222, "Saturnino Mamani", 30);
+INSERT INTO FACTURA VALUES(102, "2023/03/15", 111, "Joaquin Chumacero", 51);
+
+INSERT INTO PRODUCTO VALUES("P001", "COCA COLA 2 LTS", 10, 2);
+INSERT INTO PRODUCTO VALUES("P002", "HARINA 1KG",  8, 1);
+INSERT INTO PRODUCTO VALUES("P003", "ACEITE 1 LTS", 15, 1);
+INSERT INTO PRODUCTO VALUES("P004", "PAPEL HIGIENICO 6 ROLLOS", 10, 3);
+INSERT INTO PRODUCTO VALUES("P005", "AZUCAR 1 KG",  6, 1);
+INSERT INTO PRODUCTO VALUES("P006", "COCA COLA 3 LTS", 15, 2);
+INSERT INTO PRODUCTO VALUES("P007", "POLERA LOGO ORIENTE P.", 70, 4);
+
+INSERT INTO VENDE VALUES(100, "P006", 2, 15);
+INSERT INTO VENDE VALUES(100, "P002", 1,  8);
+INSERT INTO VENDE VALUES(100, "P003", 1, 15);
+INSERT INTO VENDE VALUES(101, "P003", 3, 10);
+INSERT INTO VENDE VALUES(102, "P001", 2, 10);
+INSERT INTO VENDE VALUES(102, "P004", 1, 10);
+INSERT INTO VENDE VALUES(102, "P005", 1,  6);
+INSERT INTO VENDE VALUES(102, "P003", 1, 15);
+
+SELECT * FROM CATEGORIA;
+SELECT * FROM FACTURA;
+SELECT * FROM PRODUCTO; 
+SELECT * FROM VENDE;
+
+/* Mostrar todos los productos de la categoria abarrotes */
+SELECT Codigo, Nombre AS 'Producto' FROM PRODUCTO, CATEGORIA WHERE ID_Categoria = ID AND DESCRIPCION = 'ABARROTES';
+
+/* Mostrar por cada factura, la cantidad vendida de ACEITE 1 LTS */
+SELECT NROF, Cantidad FROM PRODUCTO, VENDE WHERE CodigoProducto=Codigo AND Nombre='ACEITE 1 LTS';
+
+/* Mostrar la cantidad total vendida de ACEITE 1 LTS */
+SELECT SUM(Cantidad) FROM PRODUCTO, VENDE WHERE CodigoProducto=Codigo AND Nombre='ACEITE 1 LTS';
+
+/* Mostrar la cantidad de veces que se ha vendido ACEITE DE 1 LTS */
+SELECT COUNT(*) FROM PRODUCTO, VENDE WHERE CodigoProducto=Codigo AND Nombre='ACEITE 1 LTS';
+
+/* Mostrar el monto total vendido del producto de ACEITE DE 1 LTS */
+SELECT SUM(Cantidad*VENDE.PrecioP) 
+FROM VENDE, PRODUCTO 
+WHERE CodigoProducto=Codigo AND Nombre='ACEITE 1 LTS';
+/* Con consulta anidada */
+SELECT SUM(Cantidad*PrecioP) 
+FROM VENDE 
+WHERE CodigoProducto IN (SELECT Codigo FROM PRODUCTO WHERE Nombre='ACEITE 1 LTS');
+
+/* Mostrar el Nombre y el NIT de las personas que compraron PAPEL HIGIENICO 6 ROLLOS */
+SELECT NIT, FACTURA.Nombre 
+FROM FACTURA, VENDE, PRODUCTO 
+WHERE NRO=NROF AND CodigoProducto=Codigo AND PRODUCTO.Nombre='PAPEL HIGIENICO 6 ROLLOS';
+
+SELECT NIT, Nombre 
+FROM FACTURA 
+WHERE NRO IN (SELECT NROF 
+				FROM VENDE 
+				WHERE CodigoProducto IN (SELECT Codigo 
+											FROM PRODUCTO 
+											WHERE Nombre='PAPEL HIGIENICO 6 ROLLOS'
+										)
+			);
+            
+/* Mostrar el monto total facturado */
+SELECT SUM(MontoPagar) FROM FACTURA;
+
+/* Mostrar el monto total facturado por cada cliente */
+SELECT NIT, Nombre, SUM(MontoPagar) FROM FACTURA GROUP BY NIT, Nombre;
+
+/* Mostrar aquellos productos que se han vendido, a un precio mayor a 10 y una cantidad mayor o igual a 2 */
+SELECT Codigo, Nombre
+FROM VENDE, PRODUCTO 
+WHERE CodigoProducto=Codigo AND PrecioP>10 AND Cantidad>=2;
+
+/* Mostrar el numero de productos que existen por cada categoria */
+SELECT ID, Descripcion AS Categoria, COUNT(Codigo) AS NumeroProductos
+FROM PRODUCTO, CATEGORIA 
+WHERE ID_Categoria = ID
+GROUP BY ID;
+
+/* Mostrar aquellos productos que no se han vendido */
+/* Mostrar aquellos productos que si se han vendido */
+/* Mostrar las facturas donde se haya vendido HARINA 1KG */
