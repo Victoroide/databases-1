@@ -113,26 +113,28 @@ INSERT INTO PERSONA (CI, Nombre, Apellido, Direccion, Telefono, Email, TipoEmple
 (7679493, 'Fabiana', 'Manzoni', 'Calle Bolivar #456', '77543643', 'fabimanzoni@gmail.com', FALSE);
 
 INSERT INTO VEHICULO (Matricula, Marca, Modelo, Tamaño, Tipo, PersonaCI) VALUES
-('1142ENG', 'Suzuki', 'Dzire', 'Mediano', 'A', 1562892),
+('6628OBS', 'Ford', 'Range', 'Grande', 'A', 7436482),
 ('4432YUP', 'Mitsubishi', 'Eclipse', 'Pequeño', 'A', 7328931),
-('5424BOL', 'Trueno', 'FZ200', 'Pequeño', 'M', 4563234),
-('2314FAB', 'Suzuki', 'Vitara', 'Mediano', 'A', 7679493),
-('5673PFR', 'Toyota', 'Land Cruiser', 'Grande', 'A', 7323912),
 ('4435JPG', 'Honda', 'CRF', 'Pequeño', 'M', 4837241),
+('1142ENG', 'Suzuki', 'Dzire', 'Mediano', 'A', 1562892),
 ('3456ANA', 'Suzuki', 'Alto', 'Pequeño', 'A', 7772831),
-('6628OBS', 'Ford', 'Range', 'Grande', 'A', 7436482);
+('4325JJK', 'Yamaha', 'MT-03', 'Pequeño', 'M', 7392432),
+('5424BOL', 'Trueno', 'FZ200', 'Pequeño', 'M', 4563234),
+('5673PFR', 'Toyota', 'Land Cruiser', 'Grande', 'A', 7323912),
+('2314FAB', 'Suzuki', 'Vitara', 'Mediano', 'A', 7679493);
 
 INSERT INTO AUTO (MatriculaVehiculo, NumPuertas) VALUES
-('1142ENG', 4),
-('4432YUP', 2),
-('2314FAB', 2),
-('5673PFR', 4),
 ('6628OBS', 4),
-('3456ANA', 4);
+('4432YUP', 2),
+('1142ENG', 4),
+('3456ANA', 4),
+('5673PFR', 4),
+('2314FAB', 2);
 
 INSERT INTO MOTO (Matricula, Cilindrada) VALUES
-('5424BOL', 200),
-('4435JPG', 250);
+('4435JPG', 250),
+('4325JJK', 320),
+('5424BOL', 200);
 
 INSERT INTO EMPLEADO (CI, Puesto) VALUES
 (7436482, 'Gerente'),
@@ -142,35 +144,49 @@ INSERT INTO EMPLEADO (CI, Puesto) VALUES
 (7772831, 'Encerador');
 
 INSERT INTO PERTENENCIA (Matricula, PertenenciaID, Nombre, Descripcion) VALUES
-('1142ENG', 1, 'Maletín', 'Maletín negro de cuero'),
-('4432YUP', 2, 'Gafas de Sol', 'Gafas de sol marca Ray-Ban'),
-('5673PFR', 3, 'Casco', 'Casco de moto rojo vino'),
-('3456ANA', 4, 'Parasol', 'Parasol con imagen de tigre'),
-('2314FAB', 5, 'Botella de Agua', 'Botella de agua Vital de 1 litro');
+('4325JJK', 1, 'Botella de Agua', 'Botella de agua Vital de 1 litro'),
+('5424BOL', 2, 'Casco', 'Casco de moto rojo vino'),
+('5424BOL', 3, 'Gafas de Sol', 'Gafas de sol marca Ray-Ban'),
+('5673PFR', 4, 'Maletín', 'Maletín negro de cuero'),
+('2314FAB', 5, 'Parasol', 'Parasol con imagen de tigre');
 
 INSERT INTO FICHALAVADO (FichaID, Fecha, Hora, Estado, MontoTotal, MatriculaVehiculo) VALUES
-(1, '2024-06-20', '09:00:00', 'Finalizado', 110.00, '1142ENG'),
-(2, '2024-06-20', '10:30:00', 'Finalizado', 150.00, '4432YUP'),
-(3, '2024-06-21', '11:00:00', 'Finalizado', 100.00, '5673PFR'),
-(4, '2024-06-22', '12:00:00', 'Finalizado', 90.00, '3456ANA'),
-(5, '2024-06-23', '14:30:00', 'Finalizado', 45.00, '2314FAB'),
-(6, '2024-06-24', '15:00:00', 'Finalizado', 140.00, '4435JPG'),
-(7, '2024-06-25', '16:00:00', 'Finalizado', 200.00, '6628OBS'),
-(8, '2024-06-26', '09:00:00', 'Finalizado', 180.00, '5673PFR'),
-(9, '2024-06-26', '10:00:00', 'En Proceso', 70.00, '4432YUP'),
-(10, '2024-06-27', '11:00:00', 'En Proceso', 170.00, '1142ENG');
+(1, '2024-06-20', '09:00:00', 'Finalizado', 135.00, '4325JJK'),
+(2, '2024-06-20', '10:30:00', 'Finalizado', 63.00, '5424BOL'),
+(3, '2024-06-20', '12:00:00', 'Finalizado', 170.00, '5673PFR'),
+(4, '2024-06-20', '14:00:00', 'Finalizado', 90.00, '2314FAB'),
+(5, '2024-06-20', '15:30:00', 'Finalizado', 207.00, '6628OBS'),
+(6, '2024-06-21', '09:00:00', 'Finalizado', 153.00, '4432YUP'),
+(7, '2024-06-21', '10:30:00', 'Finalizado', 63.00, '4435JPG'),
+(8, '2024-06-21', '12:00:00', 'Finalizado', 81.00, '3456ANA'),
+(9, '2024-06-21', '13:30:00', 'Finalizado', 99.00, '1142ENG'),
+(10, '2024-06-22', '09:00:00', 'En Proceso', 90.00, '4325JJK'),
+(11, '2024-06-22', '10:30:00', 'En Proceso', 63.00, '5424BOL');
 
 INSERT INTO ASIGNA (EmpleadoCI, FichaID) VALUES
-(7436482, 1),
-(7328931, 2),
+(1562892, 1),
+(7772831, 1),
+(4837241, 2),
+(1562892, 2),
 (4837241, 3),
+(1562892, 3),
 (1562892, 4),
+(4837241, 4),
+(1562892, 5),
+(4837241, 5),
 (7772831, 5),
-(7436482, 6),
-(7328931, 7),
+(4837241, 6),
+(7772831, 6),
+(4837241, 7),
+(1562892, 7),
+(1562892, 8),
 (4837241, 8),
 (1562892, 9),
-(7772831, 10);
+(4837241, 9),
+(7772831, 10),
+(1562892, 10),
+(4837241, 11),
+(1562892, 11);
 
 INSERT INTO SERVICIO (ServicioID, Nombre, Descripcion, PrecioBase) VALUES
 (1, 'Lavado Básico', 'Lavado exterior del vehículo', 40.00),
@@ -180,23 +196,29 @@ INSERT INTO SERVICIO (ServicioID, Nombre, Descripcion, PrecioBase) VALUES
 (5, 'Lavado de Motor', 'Lavado y desengrasado', 100.00);
 
 INSERT INTO DETALLESERVICIO (FichaID, ServicioID, PrecioFinal) VALUES
-(1, 1, 30.00),
-(1, 3, 80.00),
-(2, 2, 100.00),
-(2, 3, 50.00),
-(3, 5, 100.00),
+(1, 2, 90.00),
+(1, 3, 45.00),
+(2, 1, 36.00),
+(2, 4, 27.00),
+(3, 1, 36.00),
+(3, 4, 45.00),
+(3, 5, 90.00),
 (4, 1, 40.00),
 (4, 4, 50.00),
-(5, 4, 45.00),
-(6, 1, 40.00),
-(6, 5, 100.00),
-(7, 2, 50.00),
-(7, 3, 50.00),
-(8, 4, 50.00),
-(8, 1, 40.00),
-(9, 3, 70.00),
-(10, 2, 100.00),
-(10, 1, 70.00);
+(5, 2, 90.00),
+(5, 3, 63.00),
+(5, 5, 54.00),
+(6, 2, 90.00),
+(6, 3, 63.00),
+(7, 1, 36.00),
+(7, 4, 27.00),
+(8, 5, 90.00),
+(9, 1, 36.00),
+(9, 4, 27.00),
+(10, 2, 90.00),
+(10, 3, 45.00),
+(11, 1, 36.00),
+(11, 4, 27.00);
 
 SELECT * FROM PERSONA;
 SELECT * FROM VEHICULO;
